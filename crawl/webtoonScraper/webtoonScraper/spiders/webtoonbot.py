@@ -17,6 +17,8 @@ class WebtoonbotSpider(scrapy.Spider):
     def parse_contents(self, response):
         for sel in response.css('div.list_area.daily_all'):
             item = WebtoonscraperItem()
-            item['thumbNail'] = sel.xpath('//*[@id="content"]/div[4]/div[2]/div/ul/li/div/a/img/@src').extract()
-            item['title'] = sel.xpath('//*[@id="content"]/div[4]/div[2]/div/ul/li/a/@title').extract()
-            yield item
+            for data in response.xpath('//*[@id="content"]/div[4]/div/div'):
+                item['days'] = data.xpath('h4/span/text()').extract()[0]
+                item['thumbNail'] = data.xpath('ul/li/div/a/img/@src').extract()
+                item['title'] = data.xpath('ul/li/a/@title').extract()
+                yield item

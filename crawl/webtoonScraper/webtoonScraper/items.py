@@ -10,6 +10,7 @@ import scrapy
 
 class WebtoonscraperItem(scrapy.Item):
     # define the fields for your item here like:
+    days = scrapy.Field()
     thumbNail = scrapy.Field()
     title = scrapy.Field()
     pass
